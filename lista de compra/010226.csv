@@ -1,0 +1,99 @@
+Descricao;Codigo;Quantidade;Unidade;Valor_Unitario;Valor_Total;Categoria;Data
+Cebola;14692;0,905;KG;2,95;2,67;Hortifruti;01/02/26
+Linguiça de Frango Natto;88101;1,012;KG;16,89;17,09;Carnes;01/02/26
+Moela de Frango;85435;0,526;KG;12,90;6,79;Carnes;01/02/26
+Músculo Bovino Reserva;85690;1,054;KG;35,89;37,83;Carnes;01/02/26
+Filé de Tilápia Vital;55351;1;UN;38,90;38,90;peixaria;01/02/26
+Pé de Frango;85359;1,004;KG;9,29;9,33;Carnes;01/02/26
+Coxa de Frango Seara IQF;37845;2;PCT;16,99;33,98;Carnes;01/02/26
+Carne Bovina Dianteiro Jerkeed;86770;0,462;KG;43,90;20,28;Carnes;01/02/26
+Carne Bovina Dianteiro Jerkeed;86770;0,5;KG;43,90;21,95;Carnes;01/02/26
+Músculo Bovino Reserva;85690;0,5;KG;35,89;17,94;Carnes;01/02/26
+Filé Sassami Perdigão;47240;4;PCT;21,99;87,96;Carnes;01/02/26
+Pão de Queijo Tradicional;37617;1;UN;19,90;19,90;Congelados;01/02/26
+Bife Coxão Mole Bovino;85220;0,336;KG;48,90;16,43;Carnes;01/02/26
+Bife Coxão Mole Bovino;85220;0,344;KG;48,90;16,82;Carnes;01/02/26
+Bife Coxão Mole Bovino;85220;0,332;KG;48,90;16,23;Carnes;01/02/26
+Bife Coxão Mole Bovino;85220;0,308;KG;48,90;15,06;Carnes;01/02/26
+Coxão Mole Bovino Reserva;85219;1,212;KG;39,50;47,87;Carnes;01/02/26
+Steak Sadia;86549;10;UN;1,99;19,90;Congelados;01/02/26
+Alho a Granel;21933;0,23;KG;20,90;4,81;Hortifruti;01/02/26
+Polpa de Fruta Brasfrut;19280;1;PCT;26,28;26,28;Congelados;01/02/26
+Polpa de Fruta Canaã;25827;3;PCT;16,90;50,70;Congelados;01/02/26
+Fígado Bovino Reserva;85320;0,804;KG;11,99;9,64;Carnes;01/02/26
+Batata Pré-Frita Rapmix;9871;1;UN;21,90;21,90;Congelados;01/02/26
+Costela Bovina;12800;0,582;KG;14,90;8,67;Carnes;01/02/26
+Costela Bovina;12800;0,684;KG;14,90;10,19;Carnes;01/02/26
+Margarina Deline com Sal;46324;3;UN;10,29;30,87;Frios e laticinios;01/02/26
+Mussarela Girolanda Ralada;85896;0,236;KG;35,90;8,47;Frios e laticinios;01/02/26
+Mortadela Defumada Aurora;94321;0,262;KG;10,99;2,88;Frios;01/02/26
+Iogurte Itambé Fit;2154;1;UN;14,90;14,90;laticinios;01/02/26
+Iogurte Itambé Zero Lactose;97869;1;UN;7,29;7,29;laticinios;01/02/26
+Pizza Mussarela Seara;39594;1;UN;15,99;15,99;Congelados;01/02/26
+Banana Pacovan;12657;2,22;KG;3,69;8,19;Hortifruti;01/02/26
+Maçã Gala Nacional;1825;1,12;KG;14,90;16,69;Hortifruti;01/02/26
+Limão Taiti;1805;1,475;KG;3,89;5,74;Hortifruti;01/02/26
+Cenoura;1920;0,94;KG;5,79;5,44;Hortifruti;01/02/26
+Tomate Italiano;33159;0,745;KG;4,99;3,72;Hortifruti;01/02/26
+Macaxeira;84159;1,37;KG;4,69;6,43;Hortifruti;01/02/26
+Macarrão Instantâneo Nissin Lámen;5614;10;PCT;2,39;23,90;Mercearia;01/02/26
+Bacon Defumado Seara;85711;0,192;KG;38,90;7,47;Frios;01/02/26
+Sardinha Robinson;59309;3;UN;4,99;14,97;Mercearia;01/02/26
+Biscoito Vitarella;75657;2;UN;5,59;11,18;Mercearia;01/02/26
+Biscoito Vitarella;95560;1;UN;6,99;6,99;Mercearia;01/02/26
+Leite Condensado Italac;22337;1;UN;6,59;6,59;Mercearia;01/02/26
+Adoçante Zero Cal;60277;2;UN;12,90;25,80;Mercearia;01/02/26
+Creme de Leite Betânia;91216;3;UN;3,49;10,47;Mercearia;01/02/26
+Geleia de Mocotó Indali;97450;4;UN;3,69;14,76;Mercearia;01/02/26
+Biscoito Treloso Pack;82878;1;UN;3,99;3,99;Mercearia;01/02/26
+Leite em Pó Laserennissi;63350;6;PCT;6,19;37,14;Mercearia;01/02/26
+Biscoito Hersheys;68559;1;UN;5,99;5,99;Mercearia;01/02/26
+Tempero Sazon;29955;2;PCT;6,99;13,98;Mercearia;01/02/26
+Ovos Vermelhos Grandes;23286;2;BDJ;16,99;33,98;Hortifruti;01/02/26
+Queijo Ralado;36774;1;PCT;5,19;5,19;Frios;01/02/26
+Biscoito Treloso;77001;3;UN;1,99;5,97;Mercearia;01/02/26
+Biscoito Treloso;95564;2;UN;1,99;3,98;Mercearia;01/02/26
+Farinha Láctea Nestlé;88984;1;UN;25,90;25,90;Mercearia;01/02/26
+Achocolatado Chocolatto;9384;2;UN;22,90;45,80;Mercearia;01/02/26
+Biscoito Marilan;72643;3;UN;3,79;11,37;Mercearia;01/02/26
+Biscoito Treloso;76997;1;UN;1,99;1,99;Mercearia;01/02/26
+Catchup Quero Tradicional;27539;1;UN;4,99;4,99;Mercearia;01/02/26
+Biscoito Bauducco Wafer;88524;5;UN;1,89;9,45;Mercearia;01/02/26
+Feijão Kicaldo;11874;3;PCT;7,19;21,57;Mercearia;01/02/26
+Açúcar Cristal Petribu;8048;2;PCT;3,59;7,18;Mercearia;01/02/26
+Arroz Pop;4356;6;PCT;4,49;26,94;Mercearia;01/02/26
+Flocão Coringa;16368;8;PCT;2,38;19,04;Mercearia;01/02/26
+Aveia Yoki Flocos;56315;3;UN;2,68;8,04;Mercearia;01/02/26
+Aveia Yoki Flocos;56316;3;UN;2,68;8,04;Mercearia;01/02/26
+Leite Longa Vida Betânia;61222;8;UN;6,49;51,92;laticinios;01/02/26
+Toalha de Papel Caprice;64696;1;PCT;3,49;3,49;Limpeza;01/02/26
+Creme Dental Colgate;85960;1;UN;7,79;7,79;Higiene;01/02/26
+Escova Dental Colgate Clean;16287;1;UN;20,90;20,90;Higiene;01/02/26
+Sabonete Protex;61018;1;UN;3,49;3,49;Higiene;01/02/26
+Sabonete Protex;76648;1;UN;3,49;3,49;Higiene;01/02/26
+Desodorante Above Aerosol;87374;1;UN;10,90;10,90;Higiene;01/02/26
+Esponja Não Risca Leve 3 Pague 2;46850;1;UN;8,90;8,90;Limpeza;01/02/26
+Detergente em Pó Bem-te-vi;97348;8;UN;2,49;19,92;Limpeza;01/02/26
+Sabonete Protex;72234;1;UN;3,49;3,49;Higiene;01/02/26
+Papel Higiênico Dama;83285;1;UN;17,48;17,48;Limpeza;01/02/26
+Saco de Lixo Dragão;86765;1;UN;13,90;13,90;Limpeza;01/02/26
+Detergente Líquido Absoluto;86289;2;UN;1,49;2,98;Limpeza;01/02/26
+Detergente Líquido Invicto;27764;2;UN;1,55;3,10;Limpeza;01/02/26
+Água Sanitária Clorin;62412;3;UN;2,19;6,57;Limpeza;01/02/26
+Desinfetante Urca Floral;61444;1;UN;6,29;6,29;Limpeza;01/02/26
+Lava Roupas Líquido Becker;97967;1;UN;19,90;19,90;Limpeza;01/02/26
+Amaciante de Roupa Sonho;50167;1;UN;10,54;10,54;Limpeza;01/02/26
+Refrigerante Coca-Cola Sem Açúcar;66455;1;UN;10,49;10,49;Bebidas;01/02/26
+Creme de Pentear Salon Line;57674;1;UN;34,90;34,90;Higiene;01/02/26
+Leite Fermentado Chamyt;58882;2;UN;6,89;13,78;laticinios;01/02/26
+Alho Rainha Triturado;37201;1;PTE;3,99;3,99;Mercearia;01/02/26
+Requeijão Betânia;65164;2;UN;9,69;19,38;laticinios;01/02/26
+Salsicha Seara;78145;1;UN;17,99;17,99;Carnes;01/02/26
+Mussarela Girolanda Ralada;85896;0,508;KG;35,90;18,24;Frios e laticinios;01/02/26
+Ameixa Nacional;1637;0,515;KG;7,99;4,11;Hortifruti;01/02/26
+Pão de Forma Bellavita;37691;1;PCT;5,69;5,69;Padaria;01/02/26
+Uva Thompson Bandeja;36877;3;BDJ;7,99;23,97;Hortifruti;01/02/26
+Uva Rubi Bandeja;41633;2;BDJ;6,99;13,98;Hortifruti;01/02/26
+Ração Pedigree Cordeiro;44932;1;UN;2,69;2,69;Pet Shop;01/02/26
+Ração Pedigree Carne;36811;2;UN;2,69;5,38;Pet Shop;01/02/26
+Iogurte Itambé Fit;91440;3;UN;8,49;25,47;laticinios;01/02/26

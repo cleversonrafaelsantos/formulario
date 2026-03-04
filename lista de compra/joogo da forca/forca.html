@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jogo da forca</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        #letras { 
+            margin-top: 20px;
+        }
+
+        #letras button {
+            width: 36px;
+            height: 36px;
+            margin: 4px;
+            cursor: pointer;
+        }
+
+        #chutes {
+            font-size: 1.2em;
+            color: #ff0000;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Selecione um arquivo CSV:</h3>
+    <input type="file" id="csvFile" accept=".csv" />
+    <button id="trocar" disabled>Trocar palavra</button>
+    <br><br>
+    <p>Dica: <strong id="dica"></strong></p>
+    <p>A palavra escolhida foi: <strong id="output"></strong></p>
+    <p>Chutes restantes: <strong id="chutes"></strong></p>
+    <p id="msg"></p>
+    <div id="letras"></div>
+
+    <script>
+
+        const palavraEscolhida = document.getElementById("output");
+        const letras = document.getElementById("letras");
+        const quantidadeChute = document.getElementById("chutes");
+        const m = document.getElementById("msg");
+        const btnTrocar = document.getElementById("trocar");
+        const dicaEl = document.getElementById("dica");
+
+        let linhasCSV = [];
+        let palavra = "";
+        let exibicao = [];
+        let chutesRestantes = 0;
+
+        const render = () => (palavraEscolhida.textContent = exibicao.join(" "));
+        const renderChutes = () => (quantidadeChute.textContent = chutesRestantes);
+        const contarLetras = (s) => [...s].filter(c => /\p{L}/u.test(c)).length;
+
+        const resetTeclado = () => {
+
+            letras.querySelectorAll("button").forEach(b => b.disabled = false);
+        };
+
+        const travarTeclado = () => {
+            letras.querySelectorAll("button").forEach(b => b.disabled = true);
+        };
+
+        const chutar = (l) => {
+            debugger
+
+            if (!palavra || chutesRestantes <= 0) return;
+            let acertou = false;
+            [...palavra].forEach((c, i) => {
+                if (c.toUpperCase() === l) {
+                    exibicao[i] = c;
+                    acertou = true;
+                }
+            });
+
+            if (!acertou) {
+                chutesRestantes--;
+                renderChutes();
+            }
+
+            render();
+
+            if (!exibicao.includes("_")) {
+                m.textContent = "Parabéns você ganhou!";
+                travarTeclado();
+            } else if (chutesRestantes <= 0) {
+                m.textContent = `Acabou. A palavra era: ${palavra}`;
+                travarTeclado();
+            }
+        };
+        const criarTeclado = () => {
+            letras.innerHTML = "";
+                 
+            for (let i = 65; i <= 90; i++) {
+                const btn = document.createElement("button");
+                btn.textContent = String.fromCharCode(i);
+                btn.disabled = true;
+                btn.addEventListener("click", () => {
+                    btn.disabled = true;
+                    chutar(btn.textContent);
+                });
+                letras.appendChild(btn);
+            }
+        };
+
+        const sortearPalavra = () => {
+
+            if (!linhasCSV.length) return;
+
+            const linhaAleatoria = linhasCSV[(Math.random() * linhasCSV.length) | 0];
+            const partes = linhaAleatoria.split(";");
+            palavra = (partes[0] || "").trim();
+            const dica = partes.slice(1).join(";").trim(); // tudo depois do primeiro ;
+            dicaEl.textContent = dica || "(sem dica)";
+            if (!palavra) {
+                palavraEscolhida.textContent = "Linha sorteada sem palavra";
+                return;
+            }
+
+            exibicao = Array(palavra.length).fill("_");
+            chutesRestantes = contarLetras(palavra);
+
+            m.textContent = "";
+            render();
+            renderChutes();
+            resetTeclado();
+        };
+
+        criarTeclado();
+
+        btnTrocar.addEventListener("click", sortearPalavra);
+
+
+        document.getElementById("csvFile").addEventListener("change", (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const content = e.target.result;
+
+                linhasCSV = content
+                    .split(/\r?\n/)
+                    .map(l => l.trim())
+                    .filter(Boolean);
+
+                if (!linhasCSV.length) {
+                    palavraEscolhida.textContent = "CSV vazio";
+                    btnTrocar.disabled = true;
+                    travarTeclado();
+                    return;
+                }
+
+                btnTrocar.disabled = false;
+                sortearPalavra();
+            };
+
+            reader.readAsText(file);
+        });
+    </script>
+</body>
+
+</html>

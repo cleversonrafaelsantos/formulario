@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de compras </title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 30px;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      margin-bottom: 15px;
+    }
+
+    input {
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background: #2c3e50;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background: #f2f2f2;
+    }
+
+    /* ✅ Só pra separar visualmente */
+    h2 {
+      margin-top: 25px;
+      margin-bottom: 5px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Upload CSV do Cupom</h1>
+    <input type="file" id="csvFile" accept=".csv" multiple>
+
+    <div id="categorias"></div>
+
+    <table id="tabela">
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- ✅ NOVO: tabela só dos selecionados -->
+    <h2>Itens selecionados</h2>
+    <table id="tabelaSelecionados">
+      <!-- ✅ NOVO: totais (um embaixo do outro) -->
+      <div style="margin-top: 10px;">
+        <div><strong>Soma valor unitário:</strong> <span id="somaUnit">0,00</span></div>
+        <div><strong>Soma valor total:</strong> <span id="somaTotal">0,00</span></div>
+      </div>
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    const tabelaHead = document.querySelector("#tabela thead");
+    const tabelaBody = document.querySelector("#tabela tbody");
+
+    // ✅ NOVO: referências da tabela de selecionados
+    const tabelaSelHead = document.querySelector("#tabelaSelecionados thead");
+    const tabelaSelBody = document.querySelector("#tabelaSelecionados tbody");
+
+    const divCategorias = document.getElementById("categorias");
+
+    let categorias = new Set();
+    let datas = new Set();
+    let cabecalhoCriado = false;
+
+    // ✅ NOVO: contador pra manter ordem original das linhas
+    let ordemLinha = 0;
+
+    document.getElementById("csvFile").addEventListener("change", function (event) {
+      const files = event.target.files;
+      if (!files.length) return;
+
+      tabelaHead.innerHTML = "";
+      tabelaBody.innerHTML = "";
+      tabelaSelHead.innerHTML = "";   // ✅ NOVO
+      tabelaSelBody.innerHTML = "";   // ✅ NOVO
+      divCategorias.innerHTML = "";
+
+      atualizarSomas();
+
+      categorias.clear();
+      datas.clear();
+      cabecalhoCriado = false;
+      ordemLinha = 0;                 // ✅ NOVO
+
+      let arquivosProcessados = 0;
+
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          processCSV(e.target.result);
+
+          arquivosProcessados++;
+
+          if (arquivosProcessados === files.length) {
+            criarFiltros();
+          }
+        };
+
+        reader.readAsText(file);
+      });
+    });
+
+    function processCSV(data) {
+      const linhas = data.split("\n").filter(l => l.trim() !== "");
+
+      linhas.forEach((linha, index) => {
+        const colunas = linha.split(";");
+
+        // Cabeçalho só uma vez
+        if (index === 0 && !cabecalhoCriado) {
+          const tr = document.createElement("tr");
+
+          const thSel = document.createElement("th");
+          thSel.textContent = "Sel";
+          tr.appendChild(thSel);
+
+          colunas.forEach(coluna => {
+            const th = document.createElement("th");
+            th.textContent = coluna.trim();
+            tr.appendChild(th);
+          });
+
+          tabelaHead.appendChild(tr);
+
+          // ✅ NOVO: clona o cabeçalho pra tabela de selecionados
+          tabelaSelHead.appendChild(tr.cloneNode(true));
+
+          cabecalhoCriado = true;
+          return;
+        }
+
+        if (index === 0) return;
+
+        const tr = document.createElement("tr");
+
+        // ✅ NOVO: guarda a ordem original dessa linha
+        tr.dataset.order = String(ordemLinha++);
+
+        const tdSel = document.createElement("td");
+        const chk = document.createElement("input");
+        chk.type = "checkbox";
+        chk.className = "chk-item";
+        tdSel.appendChild(chk);
+        tr.appendChild(tdSel);
+
+        colunas.forEach(coluna => {
+          const td = document.createElement("td");
+          td.textContent = coluna.trim();
+          tr.appendChild(td);
+        });
+
+        // ✅ NOVO: guarda os valores pra somar depois (índices do seu CSV)
+        tr.dataset.valorUnit = (colunas[4] ?? "").trim();  // valor_unitario
+        tr.dataset.valorTotal = (colunas[5] ?? "").trim(); // valor_total
+
+        const categoria = (colunas[6] ?? "").trim().toLowerCase();
+        if (categoria) categorias.add(categoria);
+
+        const dataItem = (colunas[colunas.length - 1] ?? "").trim();
+        if (dataItem) datas.add(dataItem);
+
+        tr.dataset.categoria = categoria;
+        tr.dataset.data = dataItem;
+
+        tabelaBody.appendChild(tr);
+      });
+    }
+
+    function criarFiltros() {
+      divCategorias.innerHTML = "";
+
+      const selectCategoria = document.createElement("select");
+      selectCategoria.id = "filtroCategoria";
+
+      const optCatTodos = document.createElement("option");
+      optCatTodos.value = "";
+      optCatTodos.textContent = "Todas as categorias";
+      selectCategoria.appendChild(optCatTodos);
+
+      Array.from(categorias)
+        .sort((a, b) => a.localeCompare(b))
+        .forEach(categoria => {
+          const option = document.createElement("option");
+          option.value = categoria;
+          option.textContent = categoria;
+          selectCategoria.appendChild(option);
+        });
+
+      const selectData = document.createElement("select");
+      selectData.id = "filtroData";
+
+      const optDataTodas = document.createElement("option");
+      optDataTodas.value = "";
+      optDataTodas.textContent = "Todas as datas";
+      selectData.appendChild(optDataTodas);
+
+      Array.from(datas)
+        .sort((a, b) => a.localeCompare(b))
+        .forEach(dataUnica => {
+          const option = document.createElement("option");
+          option.value = dataUnica;
+          option.textContent = dataUnica;
+          selectData.appendChild(option);
+        });
+
+      divCategorias.appendChild(selectCategoria);
+      divCategorias.appendChild(selectData);
+
+      selectCategoria.addEventListener("change", aplicarFiltros);
+      selectData.addEventListener("change", aplicarFiltros);
+
+      aplicarFiltros();
+    }
+
+    // ✅ NOVO: converte "3,49" -> 3.49 (e aguenta "R$ 3,49" também)
+    function parseNumeroBR(txt) {
+      if (!txt) return 0;
+      return Number(
+        String(txt)
+          .replace(/[^\d.,-]/g, "")  // tira R$, espaços etc
+          .replace(/\./g, "")       // remove separador de milhar
+          .replace(",", ".")        // vírgula vira ponto
+      ) || 0;
+    }
+
+    // ✅ NOVO: formata número no padrão BR
+    function formatNumeroBR(n) {
+      return Number(n || 0).toLocaleString("pt-BR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+
+    // ✅ NOVO: recalcula somas baseado APENAS nos selecionados
+    function atualizarSomas() {
+      let somaUnit = 0;
+      let somaTotal = 0;
+
+      const linhasSel = tabelaSelBody.querySelectorAll("tr");
+      linhasSel.forEach(tr => {
+        somaUnit += parseNumeroBR(tr.dataset.valorUnit);
+        somaTotal += parseNumeroBR(tr.dataset.valorTotal);
+      });
+
+      document.getElementById("somaUnit").textContent = formatNumeroBR(somaUnit);
+      document.getElementById("somaTotal").textContent = formatNumeroBR(somaTotal);
+    }
+
+    function aplicarFiltros() {
+      const filtroCatEl = document.getElementById("filtroCategoria");
+      const filtroDataEl = document.getElementById("filtroData");
+      if (!filtroCatEl || !filtroDataEl) return; // ✅ segurança
+
+      const categoriaSelecionada = filtroCatEl.value;
+      const dataSelecionada = filtroDataEl.value;
+
+      const linhasTabela = document.querySelectorAll("#tabela tbody tr");
+
+      linhasTabela.forEach(tr => {
+        const categoriaLinha = tr.dataset.categoria || "";
+        const dataLinha = tr.dataset.data || "";
+
+        const bateCategoria = (categoriaSelecionada === "" || categoriaLinha === categoriaSelecionada);
+        const bateData = (dataSelecionada === "" || dataLinha === dataSelecionada);
+
+        tr.style.display = (bateCategoria && bateData) ? "" : "none";
+      });
+    }
+
+    // ✅ NOVO: insere a linha de volta na ordem original (não joga pro final)
+    function inserirNaOrdem(tr) {
+      const ordem = Number(tr.dataset.order || 0);
+      const rows = Array.from(tabelaBody.querySelectorAll("tr"));
+
+      const antesDe = rows.find(r => Number(r.dataset.order || 0) > ordem);
+
+      if (antesDe) tabelaBody.insertBefore(tr, antesDe);
+      else tabelaBody.appendChild(tr);
+    }
+
+    // ✅ NOVO: move a linha entre as tabelas quando o checkbox muda
+    function lidarCheckbox(e) {
+      if (e.target.type !== "checkbox" || !e.target.classList.contains("chk-item")) return;
+
+      const tr = e.target.closest("tr");
+      if (!tr) return;
+
+      if (e.target.checked) {
+        tr.style.display = "";        //garante que aparece nos selecionados
+        tabelaSelBody.appendChild(tr);
+      } else {
+        inserirNaOrdem(tr);           // volta pra ordem original
+        aplicarFiltros();             // respeita filtros ao voltar
+      }
+      atualizarSomas();
+    }
+
+    // ✅ NOVO: event delegation em ambas as tabelas
+    tabelaBody.addEventListener("change", lidarCheckbox);
+    tabelaSelBody.addEventListener("change", lidarCheckbox);
+  </script>
+</body>
+
+</html>

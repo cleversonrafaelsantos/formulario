@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jogo da forca</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Selecione um arquivo CSV:</h3>
+    <input type="file" id="csvFile" accept=".csv" />
+    <br><br>
+    <p>Primeira palavra:
+        <strong id="output">
+
+        </strong>
+    </p>
+    <script>
+        document.getElementById('csvFile').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const content = e.target.result;
+                let exibirLetra;
+                let aleaLine = content.split('\n')[0];
+                let aleaValue = aleaLine.split(';', 1)[0]
+                exibirLetra = Array(aleaValue.length).fill('_')
+                document.getElementById('output').innerText = exibirLetra.join(' ');
+            };
+            reader.readAsText(file);
+        });
+    </script>
+</body>
+
+</html>
